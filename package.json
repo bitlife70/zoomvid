@@ -1,0 +1,17 @@
+{
+  "name": "zoomvid",
+  "version": "1.0.0",
+  "description": "Video zoom editor - edit uploaded video clips with zoom effects at defined timelines",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000",
+    "build": "echo 'Build complete'",
+    "lint": "echo 'No linting configured'"
+  },
+  "keywords": ["video", "editing", "zoom", "timeline"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

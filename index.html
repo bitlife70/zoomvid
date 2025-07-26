@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZoomVid - Video Zoom Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="toolbar">
+            <h1>ZoomVid</h1>
+            <div class="toolbar-controls">
+                <input type="file" id="videoUpload" accept="video/*" style="display: none;">
+                <input type="file" id="batchUpload" accept="video/*" multiple style="display: none;">
+                <button id="uploadBtn" class="btn btn-primary">Upload Video</button>
+                <button id="batchBtn" class="btn btn-primary">Batch Upload</button>
+                <button id="exportBtn" class="btn btn-secondary" disabled>Export Video</button>
+                <button id="batchExportBtn" class="btn btn-secondary" disabled>Export All</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="video-section">
+                <div class="video-container">
+                    <video id="videoPlayer" controls style="display: none;"></video>
+                    <canvas id="videoCanvas" style="display: none;"></canvas>
+                    <div id="uploadArea" class="upload-area">
+                        <div class="upload-content">
+                            <div class="upload-icon">📹</div>
+                            <p>Click to upload or drag and drop your video</p>
+                            <p class="upload-subtitle">Supports MP4, MOV, AVI, WebM (max 100MB)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="zoom-controls">
+                    <h3>Zoom Controls</h3>
+                    <div class="zoom-settings">
+                        <label>Zoom Level:</label>
+                        <input type="range" id="zoomLevel" min="1.1" max="5.0" step="0.1" value="2.0">
+                        <span id="zoomValue">2.0x</span>
+                    </div>
+                    <div class="zoom-duration">
+                        <label>Duration (seconds):</label>
+                        <input type="number" id="zoomDuration" min="0.5" max="10" step="0.1" value="2.0">
+                    </div>
+                    <div class="zoom-animation">
+                        <label>Animation Style:</label>
+                        <select id="zoomAnimation">
+                            <option value="smooth">Smooth</option>
+                            <option value="snap">Snap</option>
+                            <option value="bounce">Bounce</option>
+                            <option value="elastic">Elastic</option>
+                        </select>
+                    </div>
+                    <div class="zoom-tracking">
+                        <label>
+                            <input type="checkbox" id="enableTracking"> Enable Object Tracking
+                        </label>
+                        <div id="trackingControls" style="display: none;">
+                            <label>Tracking Sensitivity:</label>
+                            <input type="range" id="trackingSensitivity" min="0.1" max="1.0" step="0.1" value="0.5">
+                            <span id="sensitivityValue">0.5</span>
+                        </div>
+                    </div>
+                    <div class="audio-ducking">
+                        <label>
+                            <input type="checkbox" id="enableAudioDucking"> Enable Audio Ducking
+                        </label>
+                        <div id="duckingControls" style="display: none;">
+                            <label>Duck Amount:</label>
+                            <input type="range" id="duckingAmount" min="0.1" max="0.9" step="0.1" value="0.3">
+                            <span id="duckingValue">0.3</span>
+                        </div>
+                    </div>
+                    <div class="text-overlay">
+                        <label>
+                            <input type="checkbox" id="enableTextOverlay"> Add Text Overlay
+                        </label>
+                        <div id="textOverlayControls" style="display: none;">
+                            <label>Overlay Text:</label>
+                            <input type="text" id="overlayText" placeholder="Enter text..." maxlength="100">
+                            <label>Text Position:</label>
+                            <select id="textPosition">
+                                <option value="center">Center</option>
+                                <option value="top">Top</option>
+                                <option value="bottom">Bottom</option>
+                                <option value="top-left">Top Left</option>
+                                <option value="top-right">Top Right</option>
+                                <option value="bottom-left">Bottom Left</option>
+                                <option value="bottom-right">Bottom Right</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="addZoomBtn" class="btn btn-primary" disabled>Add Zoom Effect</button>
+                    <div id="zoomEvents" class="zoom-events-list"></div>
+                    
+                    <div class="batch-section" style="display: none;">
+                        <h3>Batch Processing</h3>
+                        <div id="batchQueue" class="batch-queue"></div>
+                        <div class="batch-controls">
+                            <button id="clearBatchBtn" class="btn btn-small">Clear Queue</button>
+                            <button id="applyTemplateBtn" class="btn btn-small">Apply Template</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="timeline-section">
+            <div class="timeline-container">
+                <div class="timeline-header">
+                    <div class="playback-controls">
+                        <button id="playPauseBtn" class="btn btn-small" disabled>▶️</button>
+                        <button id="stopBtn" class="btn btn-small" disabled>⏹️</button>
+                        <span id="currentTime">00:00</span> / <span id="totalTime">00:00</span>
+                        <div class="volume-control">
+                            <span class="volume-icon">🔊</span>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="100" step="1">
+                            <span id="volumeValue">100%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline">
+                    <canvas id="timelineCanvas" height="100"></canvas>
+                    <div id="timelineCursor" class="timeline-cursor">
+                        <div class="timeline-cursor-handle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/videoProcessor.js"></script>
+    <script src="js/timeline.js"></script>
+    <script src="js/zoomController.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
